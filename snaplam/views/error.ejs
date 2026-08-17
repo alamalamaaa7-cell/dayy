@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnapLam - Oops</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-theme="abu">
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="auth-wrap">
+  <div class="auth-card" style="text-align:center;">
+    <div class="brand" style="justify-content:center;"><span class="dot"></span> SnapLam</div>
+    <p style="margin:18px 0; color:var(--muted);"><%= message %></p>
+    <a class="btn" style="display:inline-block;" href="<%= user ? '/dashboard' : '/login' %>">Kembali</a>
+  </div>
+</div>
+</body>
+</html>

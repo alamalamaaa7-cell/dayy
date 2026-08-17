@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnapLam - Admin Panel</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-theme="<%= user.theme || 'abu' %>" data-username="<%= user.username %>" data-role="<%= user.role %>">
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="toast-stack" id="toastStack"></div>
+
+<div class="app-shell">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="hamburger-btn" id="menuToggle" aria-label="Buka menu">
+        <svg viewBox="0 0 24 24">
+          <line class="bar bar-top" x1="4" y1="6" x2="20" y2="6"/>
+          <line class="bar bar-mid" x1="4" y1="12" x2="20" y2="12"/>
+          <line class="bar bar-bot" x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+      </button>
+      <div class="brand-mini"><span class="dot"></span>SnapLam</div>
+    </div>
+    <div class="topbar-right">
+      <span class="live-pill"><span class="pulse-dot"></span><span>Live</span></span>
+      <div class="userchip-mini">
+        <div class="avatar sm"><%= user.username.charAt(0).toUpperCase() %></div>
+        <span class="uname"><%= user.username %></span>
+      </div>
+    </div>
+  </header>
+
+  <%- include('partials/sidebar', { user: user }) %>
+  <%- include('partials/chatmodal') %>
+
+  <main class="main">
+    <div>
+      <h1 class="page-title">🛠 Panel Admin</h1>
+      <div class="subtitle">Pantau semua aktivitas user secara realtime.</div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title"><span class="bar"></span>Ringkasan</div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num"><%= users.length %></div><div class="stat-label">Total User</div></div>
+        <div class="stat-card"><div class="stat-num"><%= logs.length %></div><div class="stat-label">Total Log Unduhan</div></div>
+        <div class="stat-card"><div class="stat-num"><%= logs.filter(l => l.status === 'sukses').length %></div><div class="stat-label">Sukses</div></div>
+        <div class="stat-card"><div class="stat-num"><%= logs.filter(l => l.status !== 'sukses').length %></div><div class="stat-label">Gagal</div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title"><span class="bar"></span>Broadcast Notifikasi</div>
+      <form class="notif-form" id="notifForm">
+        <input type="text" id="notifInput" placeholder="Tulis pesan notifikasi untuk semua user..." required>
+        <button type="submit">Kirim</button>
+      </form>
+    </div>
+
+    <div class="panel">
+      <div class="section-title"><span class="bar"></span>Log Aktivitas Semua User (Realtime)</div>
+      <div class="terminal-wrap">
+        <div class="terminal-head">
+          <span class="terminal-dot r"></span><span class="terminal-dot y"></span><span class="terminal-dot g"></span>
+          <span class="terminal-label">admin-log — live</span>
+        </div>
+        <div class="terminal" id="adminTerminal"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title"><span class="bar"></span>Riwayat Unduhan (Database)<span class="count"><%= logs.length %></span></div>
+      <div class="tbl-wrap">
+        <table class="hist">
+          <thead><tr><th>User</th><th>Platform</th><th>URL</th><th>Status</th><th>Waktu</th></tr></thead>
+          <tbody>
+            <% if (logs.length === 0) { %>
+              <tr><td colspan="5" class="empty-state">Belum ada log.</td></tr>
+            <% } %>
+            <% logs.forEach(function(l) { %>
+              <tr>
+                <td><%= l.username %></td>
+                <td><%= l.platform || '-' %></td>
+                <td class="mono" style="max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><%= l.url %></td>
+                <td><span class="badge <%= l.status === 'sukses' ? 'sukses' : 'gagal' %>"><%= l.status %></span></td>
+                <td><%= l.created_at %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title"><span class="bar"></span>Daftar User<span class="count"><%= users.length %></span></div>
+      <div class="tbl-wrap">
+        <table class="hist">
+          <thead><tr><th>ID</th><th>Username</th><th>Role</th><th>Tema</th><th>Terdaftar</th></tr></thead>
+          <tbody>
+            <% users.forEach(function(u) { %>
+              <tr>
+                <td><%= u.id %></td>
+                <td><%= u.username %></td>
+                <td><span class="badge <%= u.role === 'admin' ? 'sukses' : 'info' %>"><%= u.role %></span></td>
+                <td><%= u.theme %></td>
+                <td><%= u.created_at %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <%- include('partials/footer') %>
+  </main>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/chat.js"></script>
+<script src="/js/admin.js"></script>
+<script>SnapLamTheme.init('<%= user.theme || "abu" %>');</script>
+</body>
+</html>

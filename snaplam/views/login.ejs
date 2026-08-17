@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnapLam - Login</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-theme="abu">
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="brand"><span class="dot"></span> SnapLam</div>
+    <div class="brand-sub">Masuk untuk mulai mengunduh media favoritmu.</div>
+    <% if (error) { %>
+      <div class="error-box"><%= error %></div>
+    <% } %>
+    <form method="POST" action="/login">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="masukkan username" required autofocus>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="masukkan password" required>
+      </div>
+      <button class="btn" type="submit">Masuk</button>
+    </form>
+    <div class="switch-link">Belum punya akun? <a href="/register">Daftar sekarang</a></div>
+  </div>
+</div>
+<%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<div class="overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-head">
+    <div class="brand-mini"><span class="dot"></span>SnapLam</div>
+    <button class="sidebar-close" id="sidebarClose" aria-label="Tutup menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <div class="sidebar-card">
+    <div class="userchip">
+      <div class="avatar"><%= user.username.charAt(0).toUpperCase() %></div>
+      <div>
+        <div style="font-weight:800; font-size:14.5px;"><%= user.username %></div>
+        <span class="role-badge <%= user.role %>"><%= user.role %></span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="/dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>
+        Dashboard
+      </a>
+      <% if (user.role === 'admin') { %>
+        <a href="/admin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/></svg>
+          Panel Admin
+        </a>
+      <% } %>
+      <button type="button" class="sidebar-nav-btn" id="openChatBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span>Chat Publik</span>
+        <span class="nav-live-dot"></span>
+      </button>
+    </nav>
+
+    <div style="margin-top:18px;">
+      <div class="section-title" style="font-size:12.5px;"><span class="bar"></span>Tema Tampilan</div>
+      <div class="theme-row">
+        <div class="theme-dot t-abu" data-theme="abu" title="Abu"></div>
+        <div class="theme-dot t-biru" data-theme="biru" title="Biru"></div>
+        <div class="theme-dot t-putih" data-theme="putih" title="Putih"></div>
+        <div class="theme-dot t-orange" data-theme="orange" title="Orange"></div>
+        <div class="theme-dot t-emas" data-theme="emas" title="Emas"></div>
+      </div>
+    </div>
+
+    <a href="/logout"><button class="logout-btn" style="width:100%; margin-top:18px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+      Keluar
+    </button></a>
+  </div>
+
+</aside>
